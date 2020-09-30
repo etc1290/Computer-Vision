@@ -22,7 +22,7 @@ numpy_horizontal_concat = np.concatenate((img,img2),axis=1)
 
 
 #Show image
-cv2.resizeWindow("enhanced", 400, 800);
+cv2.resizeWindow("Image", 400, 800);
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 cv2.imshow('Image',numpy_horizontal_concat)
 
