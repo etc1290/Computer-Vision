@@ -30,19 +30,19 @@ numpy_horizontal_concat_matrix = np.concatenate((img_r,img_g,img_b),axis=1)
 numpy_horizontal_concat_rgb = np.concatenate((image_r,image_g,image_b),axis=1)
 
 #Show image
-cv2.namedWindow('Original_Image', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Original_Image', cv2.WINDOW_KEEPRATIO)
 cv2.resizeWindow("Original_Image", 400,400)
 cv2.imshow('Original_Image', img)
 
-cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Image', cv2.WINDOW_KEEPRATIO)
 cv2.resizeWindow("Image", 1200, 400)
 cv2.imshow('Image',numpy_horizontal_concat)
 
-cv2.namedWindow('Matrix', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Matrix', cv2.WINDOW_KEEPRATIO)
 cv2.resizeWindow("Matrix", 1200, 400)
 cv2.imshow('Matrix',numpy_horizontal_concat_matrix)
 
-cv2.namedWindow('Blue', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Blue', cv2.WINDOW_KEEPRATIO)
 cv2.resizeWindow("Blue", 1200, 400)
 cv2.imshow('Blue',numpy_horizontal_concat_rgb)
 
