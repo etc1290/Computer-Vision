@@ -17,7 +17,7 @@ objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 images = glob.glob('*.jpg')
-i=0
+i = 0
 for fname in images:
     img = cv.imread(fname)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -30,8 +30,15 @@ for fname in images:
         imgpoints.append(corners)
         # Draw and display the corners
         cv.drawChessboardCorners(img, (7,6), corners2, ret)
+        ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
+        h,  w = img.shape[:2]
+        newcameramtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
+        dst = cv.undistort(img, mtx, dist, None, newcameramtx)
+        x, y, w, h = roi
+        dst = dst[y:y+h, x:x+w]
+        corn = 'dis_' + fname 
+        cv.imwrite(corn, dst)
         cv.imshow('img', img)
-        print(i)
-        i+=1
-        #cv.waitKey()
-        #cv.destroyWindow('img')
+        cv.imshow('undst _img', dst)
+        cv.waitKey()
+        cv.destroyAllWindows()

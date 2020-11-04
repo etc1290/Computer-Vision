@@ -43,13 +43,10 @@ while(1):
         # Draw and display the corners
         cv.drawChessboardCorners(img, (7,6), corners2, ret)
         cv.imshow('img', img)
-        oimg = 'ori' + str(i) + '.jpg'
-        corn = 'corn' + str(i) + '.jpg'
+        oimg = './1103_1900/' +'ori' + str(i) + '.jpg'
+        corn = './1103_1900/' +'corn' + str(i) + '.jpg'
         cv.imwrite(oimg, gray)
         cv.imwrite(corn, img)
-        if(x > 5):
-            i += 1
-            x = 0
         x += 1
     
     k = cv.waitKey(5) & 0xFF
