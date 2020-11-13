@@ -50,6 +50,7 @@ while(1):
         img2 = cv2.flip(frame, 0)
         img3 = cv2.flip(frame, -1)
         
+        
     
     h1 = np.hstack((frame,img1))
     h2 = np.hstack((img2,img3))
@@ -67,14 +68,16 @@ while(1):
         Text4 = "Red"
     
     text_size = 3
-    cv2.putText(quard, Text1, (15, 40+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
-    cv2.putText(quard, Text2, (655, 40+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
-    cv2.putText(quard, Text3, (15, 520+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
-    cv2.putText(quard, Text4, (655, 520+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
-    cv2.putText(quard, Text1, (15, 40+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
-    cv2.putText(quard, Text2, (655, 40+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
-    cv2.putText(quard, Text3, (15, 520+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
-    cv2.putText(quard, Text4, (655, 520+30), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
+    text_Hoffset = 70
+    text_Voffset = 15
+    cv2.putText(quard, Text1, (text_Voffset, text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
+    cv2.putText(quard, Text2, (640+text_Voffset, text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
+    cv2.putText(quard, Text3, (text_Voffset, 480+text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
+    cv2.putText(quard, Text4, (640+text_Voffset, 480+text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (0, 0, 0), 3, cv2.LINE_AA)
+    cv2.putText(quard, Text1, (text_Voffset, text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
+    cv2.putText(quard, Text2, (640+text_Voffset, text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
+    cv2.putText(quard, Text3, (text_Voffset, 480+text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
+    cv2.putText(quard, Text4, (640+text_Voffset, 480+text_Hoffset), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,text_size, (255, 255, 255), 1, cv2.LINE_AA)
     
     #cv2.circle(frame,(200,200 + group*10),50,(0, 0, 0), -1)
     
@@ -104,8 +107,8 @@ while(1):
     if key == 32:
         now = datetime.now()
         current_time = now.strftime("%Y_%m%d_%H%M%S")
-        cv.imwrite('Saved Image/'+current_time+'.jpg',frame)
-        cv.imwrite('Saved Image/'+current_time+'quard.jpg',quard)
+        cv.imwrite('Saved Image/1'+current_time+'.jpg',frame)
+        cv.imwrite('Saved Image/2'+current_time+'quard.jpg',quard)
         #print(current_time)
     if key == 27:
         break
