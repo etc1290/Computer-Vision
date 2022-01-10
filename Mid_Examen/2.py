@@ -10,7 +10,8 @@ gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 (H,S,V) = cv.split(hsv)
 
-Blur = cv.GaussianBlur(H,(15,15),0)
+
+#紅色在HUE中是220~360和0~20度/360*255轉換成0~255
 ret,H1 = cv.threshold(H.copy(),155,255,cv.THRESH_BINARY)
 ret,H2 = cv.threshold(H.copy(),5,255,cv.THRESH_BINARY_INV)
 ret,V = cv.threshold(V,127,255,cv.THRESH_BINARY)
@@ -28,12 +29,16 @@ i = 1
 for c in cnts:
     area = cv.contourArea(c)
     if area > 10000:
+        perimeter = cv.arcLength(c, True)
         cv.drawContours(clone, c, -1, (0, 255, 0), 2)
         M = cv.moments(c)
         cX = int(M["m10"] / M["m00"])
         cY = int(M["m01"] / M["m00"])
         cv.circle(clone, (cX, cY), 10, (1, 227, 254), -1)
-        perimeter = cv.arcLength(c, True)    #計算周長
+        aeraT = "aera:"+str(area)
+        perieterT = "perimeter:"+str(perimeter)
+        cv.putText(clone,aeraT ,(cX-60, cY+30),cv.FONT_HERSHEY_DUPLEX,1, (1, 227, 254), 1, cv.LINE_AA)
+        cv.putText(clone,perieterT ,(cX-60, cY+60),cv.FONT_HERSHEY_DUPLEX,1, (1, 227, 254), 1, cv.LINE_AA)
         print("Contour #%d — area: %.2f, perimeter: %.2f" % (i , area, perimeter))
         cv.putText(clone, "#%d" % (i), (cX - 20, cY), cv.FONT_HERSHEY_SIMPLEX, 1.1, (252, 197, 5), 3)
         i += 1;

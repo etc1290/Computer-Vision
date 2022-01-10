@@ -17,8 +17,7 @@ img_copy = img.copy()
 
 dimensions = img.shape
 
-#img = cv.GaussianBlur(img,(15,15),0)
-
+#用顏色轉換得到的紅色HSV數值
 lower_red = np.array([170,50,50]) 
 upper_red = np.array([180,255,255]) 
 mask = cv.inRange(hsv, lower_red, upper_red) 
@@ -52,6 +51,26 @@ closing = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel)
 erosion = cv.erode(closing,np.ones((10,10),np.uint8),iterations = 1)
 erosion = cv.erode(erosion,np.ones((5,5),np.uint8),iterations = 1)
 
+(cnts, _) = cv.findContours(erosion.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+clone = img.copy()
+i = 0
+for c in cnts:
+    area = cv.contourArea(c)
+    perimeter = cv.arcLength(c, True)
+    cv.drawContours(clone, c, -1, (0, 255, 0), 2)
+    M = cv.moments(c)
+    cX = int(M["m10"] / M["m00"])
+    cY = int(M["m01"] / M["m00"])
+    cv.circle(clone, (cX+x, cY+y), 10, (1, 227, 254), -1)
+    print("Contour #%d — area: %.2f, perimeter: %.2f" % (i , area, perimeter))
+    cv.putText(clone, "#%d" % (i), (cX - 20+x, cY+y), cv.FONT_HERSHEY_SIMPLEX, 1.1, (252, 197, 5), 3)
+    i += 1;
+    
+if i == 2:
+    cv.putText(clone, "Iphone 12",(cX + 20 +x, cY+80+y), cv.FONT_HERSHEY_SIMPLEX, 1.1, (252, 197, 5), 3)
+if i == 3:
+        cv.putText(clone, "Iphone 12 Pro",(cX + 20 + x, cY+80 + y), cv.FONT_HERSHEY_SIMPLEX, 1.1, (252, 197, 5), 3)
+
 
 res = cv.bitwise_and(img, img, mask=mask)
 
@@ -62,6 +81,6 @@ cv.waitKey()
 cv.destroyAllWindows()
 cv.imshow("Iphone crop gray", img_copy)
 cv.imshow("Iphone crop bin", thresh)
-cv.imshow("Iphone crop 1", erosion)
+cv.imshow("Iphone count", clone)
 cv.waitKey()
 cv.destroyAllWindows()
